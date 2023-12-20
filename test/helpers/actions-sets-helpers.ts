@@ -679,3 +679,35 @@ export const createOptimismBridgeTest = async (
 
   return proposalActions;
 };
+
+export const createScrollBridgeTest = async (
+  dummyAddress: tEthereumAddress,
+  testEnv: TestEnv
+): Promise<ProposalActions> => {
+  const { ethers } = DRE;
+  const { scrollBridgeExecutor } = testEnv;
+  const proposalActions = new ProposalActions();
+
+  // push the first transaction fields into action arrays
+  const encodedAddress = ethers.utils.defaultAbiCoder.encode(['uint256'], [dummyAddress]);
+  proposalActions.targets.push(scrollBridgeExecutor.address);
+  proposalActions.values.push(BigNumber.from(0));
+  proposalActions.signatures.push('updateEthereumGovernanceExecutor(address)');
+  proposalActions.calldatas.push(encodedAddress);
+  proposalActions.withDelegatecalls.push(false);
+
+  const encodedQueue = scrollBridgeExecutor.interface.encodeFunctionData('queue', [
+    proposalActions.targets,
+    proposalActions.values,
+    proposalActions.signatures,
+    proposalActions.calldatas,
+    proposalActions.withDelegatecalls,
+  ]);
+
+  proposalActions.encodedRootCalldata = ethers.utils.defaultAbiCoder.encode(
+    ['address', 'bytes', 'uint32'],
+    [scrollBridgeExecutor.address, encodedQueue, 1500000]
+  );
+
+  return proposalActions;
+};

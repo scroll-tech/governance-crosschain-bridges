@@ -32,11 +32,18 @@ import {
   PolygonBridgeExecutor,
   ArbitrumBridgeExecutor,
   OptimismBridgeExecutor,
+  ScrollBridgeExecutor,
   MockOvmL1CrossDomainMessenger,
   MockOvmL2CrossDomainMessenger,
   MockInbox__factory,
   MockInbox,
+  MockL1ScrollMessenger,
+  MockL2ScrollMessenger,
 } from '../../typechain';
+import {
+  deployScrollBridgeExecutor,
+  deployScrollMessengers,
+} from '../../helpers/scroll-contract-getters';
 
 chai.use(solidity);
 
@@ -84,6 +91,9 @@ export interface TestEnv {
   optimismL2Messenger: MockOvmL2CrossDomainMessenger;
   arbitrumBridgeExecutor: ArbitrumBridgeExecutor;
   optimismBridgeExecutor: OptimismBridgeExecutor;
+  scrollBridgeExecutor: ScrollBridgeExecutor;
+  l1ScrollMessenger: MockL1ScrollMessenger;
+  l2ScrollMessenger: MockL2ScrollMessenger;
   proposalActions: ProposalActions[];
 }
 
@@ -206,12 +216,34 @@ const deployOptimismBridgeContracts = async (): Promise<void> => {
   );
 };
 
+const deployScrollBridgeContracts = async (): Promise<void> => {
+  const { aaveGovOwner } = testEnv;
+
+  // deploy scroll messengers
+  const messengers = await deployScrollMessengers(aaveGovOwner.signer);
+  testEnv.l1ScrollMessenger = messengers[0];
+  testEnv.l2ScrollMessenger = messengers[1];
+
+  // deploy scroll executor
+  testEnv.scrollBridgeExecutor = await deployScrollBridgeExecutor(
+    testEnv.l2ScrollMessenger.address,
+    testEnv.shortExecutor.address,
+    BigNumber.from(60),
+    BigNumber.from(1000),
+    BigNumber.from(15),
+    BigNumber.from(500),
+    aaveGovOwner.address,
+    aaveGovOwner.signer
+  );
+};
+
 export const setupTestEnvironment = async (): Promise<void> => {
   await setUpSigners();
   await createGovernanceContracts();
   await deployPolygonBridgeContracts();
   await deployArbitrumBridgeContracts();
   await deployOptimismBridgeContracts();
+  await deployScrollBridgeContracts();
 };
 
 export async function makeSuite(

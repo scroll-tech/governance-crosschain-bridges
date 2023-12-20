@@ -4,6 +4,7 @@ import {
   eOptimismNetwork,
   ePolygonNetwork,
   eXDaiNetwork,
+  eScrollNetwork,
   iParamsPerNetwork,
 } from './helpers/types';
 
@@ -37,4 +38,6 @@ export const NETWORKS_RPC_URL: iParamsPerNetwork<string> = {
   [eArbitrumNetwork.arbitrumTestnet]: `https://rinkeby.arbitrum.io/rpc`,
   [eOptimismNetwork.main]: `https://opt-mainnet.g.alchemy.com/v2/${ALCHEMY_KEY}`,
   [eOptimismNetwork.testnet]: `https://opt-kovan.g.alchemy.com/v2/${ALCHEMY_KEY}`,
+  [eScrollNetwork.scroll]: "https://rpc.scroll.io",
+  [eScrollNetwork.scrollSepolia]: "https://sepolia-rpc.scroll.io",
 };

@@ -7,10 +7,12 @@ export type eNetwork =
   | ePolygonNetwork
   | eXDaiNetwork
   | eArbitrumNetwork
-  | eOptimismNetwork;
+  | eOptimismNetwork
+  | eScrollNetwork;
 
 export enum eEthereumNetwork {
   kovan = 'kovan',
+  sepolia = 'sepolia',
   ropsten = 'ropsten',
   rinkeby = 'rinkeby',
   goerli = 'goerli',
@@ -39,6 +41,11 @@ export enum eOptimismNetwork {
   testnet = 'optimism-testnet',
 }
 
+export enum eScrollNetwork {
+  scroll = 'scroll',
+  scrollSepolia = 'scroll-sepolia',
+}
+
 export enum EthereumNetworkNames {
   kovan = 'kovan',
   ropsten = 'ropsten',
@@ -57,7 +64,8 @@ export type iParamsPerNetwork<T> =
   | iPolygonParamsPerNetwork<T>
   | iXDaiParamsPerNetwork<T>
   | iArbitrumParamsPerNetwork<T>
-  | iOptimismParamsPerNetwork<T>;
+  | iOptimismParamsPerNetwork<T>
+  | iScrollParamsPerNetwork<T>;
 
 export interface iParamsPerNetworkAll<T>
   extends iEthereumParamsPerNetwork<T>,
@@ -92,6 +100,11 @@ export interface iArbitrumParamsPerNetwork<T> {
 export interface iOptimismParamsPerNetwork<T> {
   [eOptimismNetwork.main]: T;
   [eOptimismNetwork.testnet]: T;
+}
+
+export interface iScrollParamsPerNetwork<T> {
+  [eScrollNetwork.scroll]: T;
+  [eScrollNetwork.scrollSepolia]: T;
 }
 
 export interface ObjectString {

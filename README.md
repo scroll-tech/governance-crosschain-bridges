@@ -13,7 +13,7 @@
 
 # Aave Governance Cross-Chain Bridges
 
-This repository contains smart contracts and related code for Aave cross-chain bridge executors. This is intended to extend Aave Governance on Ethereum to other networks. This repository currently contains contracts to support bridging to Polygon, Arbitrum and Optimism.
+This repository contains smart contracts and related code for Aave cross-chain bridge executors. This is intended to extend Aave Governance on Ethereum to other networks. This repository currently contains contracts to support bridging to Polygon, Arbitrum, Optimism and Scroll.
 
 The core contract is the `BridgeExecutorBase`, an abstract contract that contains the logic to facilitate the queueing, delay, and execution of sets of actions on downstream networks. This base contract needs to be extended with the functionality required for cross-chain transactions on a specific downstream network.
 
@@ -224,6 +224,14 @@ Therefore, the `msg.sender` of the cross-chain transaction on Optimism is the OV
 - `minimumDelay` - minimum allowed delay
 - `maximumDelay` - maximum allowed delay
 - `guardian` - the admin address of this contract with the permission to cancel ActionsSets
+
+## Scroll Governance Bridge
+
+### Scroll Governance Bridge Architecture
+
+### Scroll Bridge Contracts Functionality
+
+### Deploying the ScrollBridgeExecutor
 
 ## License
 

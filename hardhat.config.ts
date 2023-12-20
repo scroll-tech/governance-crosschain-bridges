@@ -23,6 +23,7 @@ import {
   eNetwork,
   eOptimismNetwork,
   ePolygonNetwork,
+  eScrollNetwork,
   eXDaiNetwork,
 } from './helpers/types';
 import { NETWORKS_RPC_URL } from './helper-hardhat-config';
@@ -46,6 +47,7 @@ const MAINNET_FORK = process.env.MAINNET_FORK === 'true';
 const FORKING_BLOCK_NUMBER = process.env.FORKING_BLOCK_NUMBER;
 const ARBISCAN_KEY = process.env.ARBISCAN_KEY || '';
 const OPTIMISTIC_ETHERSCAN_KEY = process.env.OPTIMISTIC_ETHERSCAN_KEY || '';
+const SCROLLSCAN_KEY = process.env.SCROLLSCAN_KEY || '';
 const TENDERLY_PROJECT = process.env.TENDERLY_PROJECT || '';
 const TENDERLY_USERNAME = process.env.TENDERLY_USERNAME || '';
 
@@ -111,7 +113,27 @@ const hardhatConfig: HardhatUserConfig = {
     apiKey: {
       optimisticEthereum: OPTIMISTIC_ETHERSCAN_KEY,
       arbitrumOne: ARBISCAN_KEY,
+      [eScrollNetwork.scroll]: SCROLLSCAN_KEY,
+      [eScrollNetwork.scrollSepolia]: SCROLLSCAN_KEY,
     },
+    customChains: [
+        {
+          network: eScrollNetwork.scroll,
+          chainId: 59140,
+          urls: {
+            apiURL: 'https://api-sepolia.scrollscan.com/api',
+            browserURL: 'https://sepolia.scrollscan.com/',
+          },
+        },
+        {
+          network: eScrollNetwork.scrollSepolia,
+          chainId: 59144,
+          urls: {
+            apiURL: 'https://api.scrollscan.com/api',
+            browserURL: 'https://scrollscan.com/',
+          },
+        },
+      ],
   },
   tenderly: {
     project: TENDERLY_PROJECT,
