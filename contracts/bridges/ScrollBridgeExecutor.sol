@@ -6,7 +6,7 @@ import {L2BridgeExecutor} from './L2BridgeExecutor.sol';
 
 /**
  * @title ScrollBridgeExecutor
- * @author Aave
+ * @author Aave, Scroll
  * @notice Implementation of the Scroll Bridge Executor, able to receive cross-chain transactions from Ethereum
  * @dev Queuing an ActionsSet into this Executor can only be done by the `L2ScrollMessenger` and having
  * the EthereumGovernanceExecutor as xDomainMessageSender
