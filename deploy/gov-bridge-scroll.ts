@@ -24,8 +24,8 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
 
     await deploy('ScrollGov', {
       args: [
-        ADDRESSES['L2_SCROLL_MESSENGER'],
-        ADDRESSES['SCROLL_GOV_EXECUTOR'],
+        L2_SCROLL_MESSENGER,
+        SCROLL_GOV_EXECUTOR,
         CONSTANTS['DELAY'],
         CONSTANTS['GRACE_PERIOD'],
         CONSTANTS['MIN_DELAY'],

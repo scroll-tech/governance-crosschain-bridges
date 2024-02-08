@@ -118,16 +118,16 @@ const hardhatConfig: HardhatUserConfig = {
     },
     customChains: [
         {
-          network: eScrollNetwork.scroll,
-          chainId: 59140,
+          network: eScrollNetwork.scrollSepolia,
+          chainId: 534351,
           urls: {
             apiURL: 'https://api-sepolia.scrollscan.com/api',
             browserURL: 'https://sepolia.scrollscan.com/',
           },
         },
         {
-          network: eScrollNetwork.scrollSepolia,
-          chainId: 59144,
+          network: eScrollNetwork.scroll,
+          chainId: 534352,
           urls: {
             apiURL: 'https://api.scrollscan.com/api',
             browserURL: 'https://scrollscan.com/',
@@ -183,6 +183,8 @@ const hardhatConfig: HardhatUserConfig = {
         l1: 'kovan',
       },
     },
+    [eScrollNetwork.scroll]: getCommonNetworkConfig(eScrollNetwork.scroll, 534352),
+    [eScrollNetwork.scrollSepolia]: getCommonNetworkConfig(eScrollNetwork.scrollSepolia, 534351),
     hardhat: {
       accounts: accounts.map(({ secretKey, balance }: { secretKey: string; balance: string }) => ({
         privateKey: secretKey,
